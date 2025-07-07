@@ -1,0 +1,6 @@
+record_id,department_id,department_name
+1,103,Finance
+2,105,Quality Control
+3,104,Logistics
+4,101,Production
+5,102,HR
