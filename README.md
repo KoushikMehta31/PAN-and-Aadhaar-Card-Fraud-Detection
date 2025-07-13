@@ -1,110 +1,152 @@
-## 📌 Project Title: Pan and Aadhaar card Fraud Detection using MySQL and Power BI
+# PAN and Aadhaar Card Fraud Detection Analysis
+
+## Overview
+
+The **PAN and Aadhaar Card Fraud Detection Analysis** is a data analytics project built using **Excel**, **MySQL**, and **Power BI**. It aims to detect anomalies and fraudulent entries in employee identity records and attendance logs.
 
 ---
-
-## 📝 Project Overview
-
-This project involved the design and implementation of a **Fraud Detection and Employee Analytics System** aimed at improving the accuracy of identity data and monitoring attendance-related anomalies.
-
-The system focused on:
-- Validating employee identity documents such as **PAN** and **Aadhaar** numbers
-- Detecting irregularities in attendance behavior like duplicate swipes
-- Creating an interactive **Power BI dashboard** using **MySQL**, **Excel**, and **DAX** for real-time monitoring and decision-making
-
----
-
-## 🛠️ Tools & Technologies Used
-
-| Tool/Technology | Role in the Project                                      |
-|------------------|----------------------------------------------------------|
-| **MySQL**         | Data extraction, transformation, validation logic using SQL queries |
-| **Power BI**      | Building interactive reports and dashboards              |
-| **Excel (CSV)**   | Data cleaning, formatting, and import into BI tools      |
-| **DAX**           | Calculating KPIs, measures, and applying filters in Power BI |
-
----
-
-## 🔍 Identity Validation Rules
-
-### ✅ PAN Card Validation
-
-**Structure**: `AAAAA9999A` (10-character alphanumeric)
-
-**Validation Rules**:
-- First 5 characters: Letters `[A-Z]`
-- Next 4 characters: Digits `[0-9]`
-- Last character: Letter `[A-Z]`
-- 5th character must match:
-  - First letter of the **surname**
-  - If surname is unavailable, use the **first name’s initial**
-
-📌 **Examples**:
-- `ABCDE1234M` – valid for `Koushik Mehta`
-- `ABCDK1234P` – valid if only `Koushik` is available without surname
-
----
-
-### ✅ Aadhaar Card Validation
-
-**Structure**: 12-digit numeric code
-
-**Validation Rules**:
-- Must be exactly 12 digits
-- Cannot start with 0 or 1
-- Should pass the **Verhoeff algorithm** (checksum validation)
-- No alphabet or special characters allowed
-
-📌 **Examples**:
-- `2345 6789 1234` ✅ Valid  
-- `0123 4567 8901` ❌ Invalid (starts with 0)  
-- `1234-5678-9012` ❌ Invalid (contains symbols)
-
----
-
-## 📊 Power BI Dashboard Highlights
-
-An interactive dashboard was developed to visualize fraud detection metrics and employee activity patterns.
 
 ### Key Features:
-- Identification of invalid PAN and Aadhaar numbers
-- Attendance anomalies (duplicate or missing swipes)
-- Fraud pattern analysis across departments or locations
-- Employee-wise drill-down for targeted investigation
-- Time-based and department-wise filtering using slicers
 
-### 🔢 DAX Measures Used:
-- `Total Invalid PAN`
-- `Suspicious Aadhaar Count`
-- `Fraud % by Department`
-- `Missing Swipe Count`
+- **End-to-End Data Pipeline**: From Excel preprocessing → MySQL logic → Power BI dashboard.
+- **PAN/Aadhaar Validation**: Checks document format and content consistency using SQL rules.
+- **Attendance Fraud Checks**: Detects duplicate swipes and missing entries.
+- **Power BI Dashboard**: Visualizes fraud trends, invalid records, and department-wise anomalies.
+- **Interactive Filters**: Slice data by department, location, and date range for detailed analysis.
 
 ---
 
-## 🖥️ Dashboard Structure & Explanation
+## Features:
 
-The Power BI dashboard is divided into multiple interactive pages:
-
-### 1. **Fraud Detection Overview**
-- 🔹 **KPI Cards** show:
-  - Total Employees
-  - Invalid PANs
-  - Suspicious Aadhaar Counts
-  - Duplicate Swipes
-- 🔹 **Department-wise Fraud Bar Chart**
-- 🔹 **Filter Controls (Slicers)** for:
-  - Month, Department, and Location
-- 🔹 **Data Table** listing all flagged entries
-
-### 2. **Attendance Analysis**
-- 🔹 **Duplicate Swipe Tracker** – Highlights employees with multiple in/out entries on the same day
-- 🔹 **Missing Swipe Heatmap** – Visualizes patterns of missing swipes across days and weeks
-- 🔹 **Drill-down Filters** – Allows user to view anomalies for individual employees
-
-### 3. **Identity Validation Summary**
-- 🔹 **PAN Validation Pie Chart** – Valid vs. Invalid PAN formats
-- 🔹 **Aadhaar Format Breakdown** – Categorizes Aadhaar entries by validity
-- 🔹 **Fraud Distribution by Department**
-
-This dashboard enables easy exploration of fraud trends, suspicious employee activity, and identity inconsistencies—making it valuable for HR, compliance, and internal audit teams.
+- ✅ **Clean and Prepare Data**: Remove blanks, fill missing exit dates, and standardize formats using Excel.
+- ✅ **Validate Identity Documents**:
+  - PAN: Check for format, length, and 5th-character logic.
+  - Aadhaar: Validate 12-digit rule and disallow alphabets.
+- ✅ **Detect Fraud Patterns**:
+  - Duplicate Employee IDs
+  - Invalid PAN or Aadhaar entries
+  - Attendance entries with suspicious check-in/check-out logs
+- ✅ **Interactive Dashboard**:
+  - Department-wise fraud stats
+  - KPI cards (Invalid PAN, Suspicious Aadhaar, Fraud %)
+  - Drill-down on employee records
+  - Time-based filtering with slicers
 
 ---
+
+## Tech Stack:
+
+- **Excel**:
+  - Data cleaning and formatting
+  - Handling NULL or duplicate entries
+
+- **MySQL**:
+  - SQL queries for validation, joining tables, fraud detection logic
+  - PAN and Aadhaar checks using REGEXP and CASE conditions
+
+- **Power BI**:
+  - Dashboard development and visual representation of fraud
+  - Use of DAX to create KPIs and calculated metrics
+
+- **DAX Measures**:
+  -  `Total Number of Employee`
+  - `Total Invalid PAN`
+  - `Total Invalid Aadhaar`
+  - `Suspicious Aadhaar Count`
+  - `Fraud % by Department`
+  - `Duplicate Swipe Count`
+  - `Missing Swipe Tracker`
+
+---
+
+## PAN and Aadhaar Validation Rules
+
+### ✅ PAN Card Format
+
+- Format: `AAAAA9999A` (10-character alphanumeric)
+- Rules:
+  - First 5: Letters `[A-Z]`
+  - Next 4: Digits `[0-9]`
+  - Last character: Letter `[A-Z]`
+  - 5th character should match:
+    - First letter of surname (or first name if surname is missing)
+
+📌 Examples:
+- `ABCDE1234M` – Valid for **Koushik Mehta**
+- `ABCDK1234P` – Valid if only first name is available
+
+---
+
+### ✅ Aadhaar Card Format
+
+- Format: 12-digit numeric code
+- Rules:
+  - Must be 12 digits
+  - Cannot start with `0` or `1`
+  - No alphabets or special characters
+  - Must pass **Verhoeff algorithm** (used by UIDAI)
+
+📌 Examples:
+- ✅ `2345 6789 1234` → Valid
+- ❌ `0123 4567 8901` → Starts with 0
+- ❌ `1234-5678-9012` → Contains symbols
+
+---
+
+## 📊 Power BI Dashboard Overview
+
+The final Power BI dashboard provides a detailed and interactive visualization of PAN and Aadhaar card fraud detection across departments, years, and genders.
+
+---
+
+### 🖼️ Dashboard Preview
+
+![PAN & Aadhaar Card Fraud Detection Dashboard](assets/pan-aadhaar-dashboard.png)
+
+---
+
+### 🔍 Key Dashboard Highlights
+
+#### ✅ Top-Level KPIs (Cards)
+- **Total Employees**: `4.00K`
+- **Total PAN Errors**: `3.17K`
+- **Total Aadhaar Errors**: `0.99K`
+
+#### ✅ Filters
+- **Gender Filter**: Toggle between male/female employees
+- **Time Range Slider**: View fraud trend from 2020 to 2025
+
+---
+
+### 📈 Visual Breakdown
+
+| Visualization | Description |
+|---------------|-------------|
+| **Count of Invalid Employee by Department Name** | Shows number of Aadhaar & PAN errors across departments (HR, Production, Logistics, etc.) |
+| **Count of Invalid Employee by Joining Year** | Displays how PAN/Aadhaar errors are distributed from 2020–2025 |
+| **Invalid Employee Breakdown (Pie Chart)** | Visualizes total PAN vs Aadhaar errors as a % share |
+| **Invalid Count by Department (Donut Chart)** | Department-wise share of total fraud cases |
+| **Invalid Comments Analysis** | Categorizes the type of error (e.g. `5th character not matching`, `alphanumeric Aadhaar`, `incorrect digit count`, etc.) |
+| **Invalid Employees by Gender (TreeMap)** | Gender-wise distribution of invalid employees (e.g. 2.47K Male, 1.54K Female) |
+
+---
+
+### 📁 How to Use
+
+1. Load the cleaned `.csv` employee dataset into **MySQL**
+2. Run validation SQL queries to detect PAN/Aadhaar fraud
+3. Connect the MySQL database to **Power BI**
+4. Build visualizations and slicers using **DAX** measures:
+   - `Total Invalid PAN`
+   - `Suspicious Aadhaar Count`
+   - `Invalid by Department`, `Year`, `Gender`
+   - `Fraud by Comments`
+
+---
+
+### 🔽 Download Dashboard
+
+📂 **[Download Power BI File](dashboard/dashboard.pbix)**  
+> Open with Power BI Desktop to view full slicers, visuals, and interactivity.
+
+
