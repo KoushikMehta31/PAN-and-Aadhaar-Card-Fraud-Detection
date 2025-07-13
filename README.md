@@ -146,7 +146,7 @@ The final Power BI dashboard provides a detailed and interactive visualization o
 
 ### 🔽 Download Dashboard
 
-📂 **[Download Power BI File](dashboard/dashboard.pbix)**  
+📂 **[Download Power BI File](\Pictures\Screenshots\dashboard.png)**  
 > Open with Power BI Desktop to view full slicers, visuals, and interactivity.
 
 
