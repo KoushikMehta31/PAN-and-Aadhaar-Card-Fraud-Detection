@@ -6,34 +6,6 @@ The **PAN and Aadhaar Card Fraud Detection Analysis** is a data analytics projec
 
 ---
 
-### Key Features:
-
-- **End-to-End Data Pipeline**: From Excel preprocessing → MySQL logic → Power BI dashboard.
-- **PAN/Aadhaar Validation**: Checks document format and content consistency using SQL rules.
-- **Attendance Fraud Checks**: Detects duplicate swipes and missing entries.
-- **Power BI Dashboard**: Visualizes fraud trends, invalid records, and department-wise anomalies.
-- **Interactive Filters**: Slice data by department, location, and date range for detailed analysis.
-
----
-
-## Features:
-
-- ✅ **Clean and Prepare Data**: Remove blanks, fill missing exit dates, and standardize formats using Excel.
-- ✅ **Validate Identity Documents**:
-  - PAN: Check for format, length, and 5th-character logic.
-  - Aadhaar: Validate 12-digit rule and disallow alphabets.
-- ✅ **Detect Fraud Patterns**:
-  - Duplicate Employee IDs
-  - Invalid PAN or Aadhaar entries
-  - Attendance entries with suspicious check-in/check-out logs
-- ✅ **Interactive Dashboard**:
-  - Department-wise fraud stats
-  - KPI cards (Invalid PAN, Suspicious Aadhaar, Fraud %)
-  - Drill-down on employee records
-  - Time-based filtering with slicers
-
----
-
 ## Tech Stack:
 
 - **Excel**:
@@ -48,32 +20,27 @@ The **PAN and Aadhaar Card Fraud Detection Analysis** is a data analytics projec
   - Dashboard development and visual representation of fraud
   - Use of DAX to create KPIs and calculated metrics
 
-- **DAX Measures**:
-  -  `Total Number of Employee`
-  - `Total Invalid PAN`
-  - `Total Invalid Aadhaar`
-  - `Suspicious Aadhaar Count`
-  - `Fraud % by Department`
-  - `Duplicate Swipe Count`
-  - `Missing Swipe Tracker`
-
 ---
 
 ## PAN and Aadhaar Validation Rules
 
-### ✅ PAN Card Format
+### ✅ PAN Card Validation Rules
 
-- Format: `AAAAA9999A` (10-character alphanumeric)
-- Rules:
-  - First 5: Letters `[A-Z]`
-  - Next 4: Digits `[0-9]`
-  - Last character: Letter `[A-Z]`
-  - 5th character should match:
-    - First letter of surname (or first name if surname is missing)
+- **Format**: `AAAAA9999A` (10-character alphanumeric)
 
-📌 Examples:
-- `ABCDE1234M` – Valid for **Koushik Mehta**
-- `ABCDK1234P` – Valid if only first name is available
+- **Validation Rules**:
+  - First 5 characters: Must be uppercase letters `[A-Z]`
+  - Next 4 characters: Must be digits `[0-9]`
+  - Last 1 character: Must be an uppercase letter `[A-Z]`
+  - The **5th character** must match:
+    - The first letter of the **surname** (last name)
+    - If the surname is **not available**, then it must match the first letter of the **first name**
+
+📌 **Examples**:
+- ✅ `ABCDM1234O` – Valid for employee **Koushik Mehta**  
+- ✅ `ABCDK1234P` – Valid for employee **Koushik** (no last name)  
+- ❌ `ABCD12345A` – Invalid format (not 5 letters + 4 digits + 1 letter)
+- ❌ `A1CDE1234M` – Invalid: contains numbers in the letter section
 
 ---
 
@@ -82,14 +49,12 @@ The **PAN and Aadhaar Card Fraud Detection Analysis** is a data analytics projec
 - Format: 12-digit numeric code
 - Rules:
   - Must be 12 digits
-  - Cannot start with `0` or `1`
   - No alphabets or special characters
-  - Must pass **Verhoeff algorithm** (used by UIDAI)
 
 📌 Examples:
 - ✅ `2345 6789 1234` → Valid
-- ❌ `0123 4567 8901` → Starts with 0
-- ❌ `1234-5678-9012` → Contains symbols
+- ❌ `A123 4567 8901` → Invalid (contains alphabet)
+- ❌ `1234-5678-9012` → Incalid (Contains symbols)
 
 ---
 
@@ -130,20 +95,6 @@ The final Power BI dashboard provides a detailed and interactive visualization o
 | **Invalid Comments Analysis** | Categorizes the type of error (e.g. `5th character not matching`, `alphanumeric Aadhaar`, `incorrect digit count`, etc.) |
 | **Invalid Employees by Gender (TreeMap)** | Gender-wise distribution of invalid employees (e.g. 2.47K Male, 1.54K Female) |
 
----
-
-### 📁 How to Use
-
-1. Load the cleaned `.csv` employee dataset into **MySQL**
-2. Run validation SQL queries to detect PAN/Aadhaar fraud
-3. Connect the MySQL database to **Power BI**
-4. Build visualizations and slicers using **DAX** measures:
-   - `Total Invalid PAN`
-   - `Suspicious Aadhaar Count`
-   - `Invalid by Department`, `Year`, `Gender`
-   - `Fraud by Comments`
-
----
 
 ### 🔽 Download Dashboard
 
