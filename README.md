@@ -64,7 +64,7 @@ The final Power BI dashboard provides a detailed and interactive visualization o
 
 ---
 
-### 🖼️ Dashboard Preview
+### 🖼️ Dashboard
 
 ![PAN & Aadhaar Card Fraud Detection Dashboard](assets/dashboard.png)
 
